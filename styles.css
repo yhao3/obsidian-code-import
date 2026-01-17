@@ -1,0 +1,100 @@
+/* Code Import Plugin Styles */
+
+.code-import-container {
+  margin: var(--size-4-4) 0;
+}
+
+.code-import-block {
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+}
+
+/* Header hidden by default, shown via body class */
+.code-import-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--size-2-3) var(--size-4-3);
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: var(--font-smallest);
+}
+
+body.code-import-show-filename .code-import-header {
+  display: flex;
+}
+
+.code-import-filename {
+  font-family: var(--font-monospace);
+  color: var(--text-muted);
+}
+
+.code-import-line-info {
+  font-family: var(--font-monospace);
+  color: var(--text-faint);
+  font-size: var(--font-smaller);
+}
+
+/* Reset code block styles inside our wrapper */
+.code-import-block pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* Default: no wrap, horizontal scroll */
+.code-import-block pre,
+.code-import-block pre code {
+  white-space: pre !important;
+  overflow-x: auto !important;
+}
+
+/* Wrap code option (uses body class for instant toggle) */
+body.code-import-wrap-enabled .code-import-block pre,
+body.code-import-wrap-enabled .code-import-block pre code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-all !important;
+  overflow-x: visible !important;
+}
+
+/* Error state */
+.code-import-error {
+  margin: var(--size-4-4) 0;
+  padding: var(--size-4-3);
+  border-radius: var(--radius-s);
+  background-color: var(--background-modifier-error);
+  border: 1px solid var(--text-error);
+}
+
+.code-import-error-header {
+  font-weight: var(--font-semibold);
+  color: var(--text-error);
+  margin-bottom: var(--size-4-2);
+}
+
+.code-import-error-details {
+  color: var(--text-normal);
+  margin-bottom: var(--size-4-2);
+}
+
+.code-import-error-source {
+  font-family: var(--font-monospace);
+  font-size: var(--font-smallest);
+  color: var(--text-muted);
+  background-color: var(--background-primary);
+  padding: var(--size-2-3) var(--size-4-2);
+  border-radius: var(--radius-s);
+}
+
+/* Loading state */
+.code-import-loading {
+  margin: var(--size-4-4) 0;
+  padding: var(--size-4-3);
+  border-radius: var(--radius-s);
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  font-style: italic;
+}

@@ -1,0 +1,11 @@
+{
+	"id": "code-import",
+	"name": "Code Import",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "Import code files with @import syntax. Compatible with Foam.",
+	"author": "yhao3",
+	"authorUrl": "https://github.com/yhao3",
+	"fundingUrl": "https://ko-fi.com/yhao3",
+	"isDesktopOnly": false
+}

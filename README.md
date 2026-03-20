@@ -38,15 +38,23 @@ Import external code files in your Obsidian notes using `@import` syntax (compat
 
 ### Parameters
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `line_begin` | Start line (0-based index) | `line_begin=4` starts from 5th line |
-| `line_end` | End line (exclusive, supports negative) | `line_end=14` or `line_end=-1` |
+| Parameter | Description (0-based) | Description (1-based) |
+|-----------|----------------------|----------------------|
+| `line_begin` | Start line, 0-based index | Start line, 1-based index |
+| `line_end` | End line, exclusive (supports negative) | End line, inclusive (supports negative) |
 
 ### Line Index Examples
 
+**0-based mode** (default, Foam-compatible):
+
 - `{line_begin=0 line_end=10}` → Lines 1-10 (indices 0-9)
 - `{line_begin=5}` → From line 6 to end
+- `{line_end=-2}` → From start, excluding last 2 lines
+
+**1-based mode:**
+
+- `{line_begin=1 line_end=10}` → Lines 1-10
+- `{line_begin=5}` → From line 5 to end
 - `{line_end=-2}` → From start, excluding last 2 lines
 
 ## Installation
@@ -85,6 +93,7 @@ In your markdown file:
 |---------|-------------|---------|
 | Show file name | Display filename header above code block | On |
 | Wrap code | Wrap long lines instead of horizontal scrolling | Off |
+| Line number base | 0-based (Foam-compatible) or 1-based indexing for `line_begin`/`line_end` | 0-based |
 
 ## License
 

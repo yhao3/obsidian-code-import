@@ -122,6 +122,7 @@ export default class CodeImportPlugin extends Plugin {
             {
               showFileName: this.settings.showFileName,
               wrapCode: this.settings.wrapCode,
+              lineNumberBase: this.settings.lineNumberBase,
             },
             this
           );

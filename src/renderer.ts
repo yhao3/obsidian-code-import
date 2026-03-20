@@ -1,9 +1,11 @@
 import { MarkdownRenderer, App, Component } from 'obsidian';
 import { ImportDirective, extractLines, getFileExtension, extensionToLanguage } from './parser';
+import type { LineNumberBase } from './settings';
 
 export interface RenderOptions {
   showFileName: boolean;
   wrapCode: boolean;
+  lineNumberBase: LineNumberBase;
 }
 
 /**
@@ -56,8 +58,21 @@ export async function renderCodeBlock(
   const ext = getFileExtension(directive.filePath);
   const language = extensionToLanguage(ext);
 
+  // Convert 1-based line numbers to 0-based for extractLines
+  let internalBegin = directive.lineBegin;
+  let internalEnd = directive.lineEnd;
+
+  if (options.lineNumberBase === '1') {
+    // Convert 1-based begin to 0-based: line 1 → index 0
+    if (internalBegin !== undefined) {
+      internalBegin = internalBegin - 1;
+    }
+    // 1-based inclusive end N == 0-based exclusive end N, so no adjustment needed
+    // Negative values remain unchanged (they count from the end)
+  }
+
   // Extract lines if specified
-  const extractedContent = extractLines(content, directive.lineBegin, directive.lineEnd);
+  const extractedContent = extractLines(content, internalBegin, internalEnd);
 
   // Create wrapper for visual styling
   const wrapper = document.createElement('div');
@@ -73,19 +88,24 @@ export async function renderCodeBlock(
 
   header.appendChild(fileName);
 
-  // Add line range info if specified (display as 1-based for readability)
+  // Add line range info if specified
   if (directive.lineBegin !== undefined || directive.lineEnd !== undefined) {
     const lineInfo = document.createElement('span');
     lineInfo.className = 'code-import-line-info';
 
     const parts: string[] = [];
     if (directive.lineBegin !== undefined) {
-      // Convert 0-based to 1-based for display
-      parts.push(`L${directive.lineBegin + 1}`);
+      if (options.lineNumberBase === '1') {
+        // Already 1-based, display as-is
+        parts.push(`L${directive.lineBegin}`);
+      } else {
+        // Convert 0-based to 1-based for display
+        parts.push(`L${directive.lineBegin + 1}`);
+      }
     }
     if (directive.lineEnd !== undefined) {
       // Negative values show as-is (e.g., -1 means "exclude last")
-      // Positive values: exclusive end in 0-based equals last line number in 1-based
+      // Positive values: display as-is for both modes (0-based exclusive end == 1-based inclusive end)
       parts.push(`L${directive.lineEnd}`);
     }
     lineInfo.textContent = parts.join('-');

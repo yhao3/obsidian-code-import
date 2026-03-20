@@ -1,14 +1,18 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
 import type CodeImportPlugin from './main';
 
+export type LineNumberBase = '0' | '1';
+
 export interface CodeImportSettings {
   showFileName: boolean;
   wrapCode: boolean;
+  lineNumberBase: LineNumberBase;
 }
 
 export const DEFAULT_SETTINGS: CodeImportSettings = {
   showFileName: true,
   wrapCode: false,
+  lineNumberBase: '0',
 };
 
 export class CodeImportSettingTab extends PluginSettingTab {
@@ -44,6 +48,20 @@ export class CodeImportSettingTab extends PluginSettingTab {
           .setValue(this.plugin.settings.wrapCode)
           .onChange(async (value) => {
             this.plugin.settings.wrapCode = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName('Line number base')
+      .setDesc('Whether line_begin and line_end use 0-based or 1-based indexing')
+      .addDropdown((dropdown) =>
+        dropdown
+          .addOption('0', '0-based (default)')
+          .addOption('1', '1-based')
+          .setValue(this.plugin.settings.lineNumberBase)
+          .onChange(async (value) => {
+            this.plugin.settings.lineNumberBase = value as LineNumberBase;
             await this.plugin.saveSettings();
           })
       );

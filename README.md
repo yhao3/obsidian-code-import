@@ -2,6 +2,8 @@
 
 Import external code files in your Obsidian notes using `@import` syntax (compatible with [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)).
 
+🔗 [Website](https://code-import.yhao3.dev) · [Community plugin page](https://community.obsidian.md/plugins/code-import)
+
 ## Screenshots
 
 ### Desktop
@@ -64,6 +66,8 @@ Import external code files in your Obsidian notes using `@import` syntax (compat
 1. Open Settings → Community plugins
 2. Search for "Code Import"
 3. Install and enable
+
+Or install directly from the [community plugin page](https://community.obsidian.md/plugins/code-import).
 
 ### Manual Installation
 
